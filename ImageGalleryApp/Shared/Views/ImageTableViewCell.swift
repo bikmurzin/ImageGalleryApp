@@ -68,6 +68,8 @@ final class ImageTableViewCell: UITableViewCell {
     @objc
     private func addFavoriteButtonTapped() {
         print("addFavoriteButtonTapped")
+        isFavorite = !isFavorite
+        addFavoriteButton.imageView?.image = isFavorite ? Constants.heartFillImage : Constants.heartImage
         delegate.changeImageStatus(isFavorite: isFavorite)
     }
     
