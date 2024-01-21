@@ -8,7 +8,7 @@
 import UIKit
 
 struct ImageTableViewCellModel: Equatable {
-    let image: UIImage
-    let url: URL
+    let image: UIImage?
+    let url: URL?
     let isFavorite: Bool
 }

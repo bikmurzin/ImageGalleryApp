@@ -14,7 +14,7 @@ protocol ImageTableViewCellDelegate {
 
 final class ImageTableViewCell: UITableViewCell {
     
-    private let image: UIImage
+    private let image: UIImage?
     
     private var isFavorite: Bool
     
@@ -22,22 +22,24 @@ final class ImageTableViewCell: UITableViewCell {
     
     private let imageCard: UIImageView = {
         let imageView = UIImageView()
-        
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     private let addFavoriteButton: UIButton = {
         let button = UIButton()
-        button.imageView?.image = Constants.heartImage
+        button.setImage(Constants.heartImage, for: .normal)
         button.addTarget(ImageTableViewCell.self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
+        button.isEnabled = true
         return button
     }()
     
-    init(image: UIImage, isFavorite: Bool, delegate: ImageTableViewCellDelegate) {
+    init(image: UIImage?, isFavorite: Bool, delegate: ImageTableViewCellDelegate) {
         self.image = image
+        
         self.isFavorite = isFavorite
         self.delegate = delegate
-        super.init(frame: CGRect.zero)
+        super.init(style: .default, reuseIdentifier: "cell")
         backgroundColor = Constants.backgroundColor
         configCell()
         setImage()
@@ -50,18 +52,21 @@ final class ImageTableViewCell: UITableViewCell {
     
     private func isImageFavorite() {
         guard isFavorite else { return }
-        addFavoriteButton.imageView?.image = Constants.heartFillImage
+        addFavoriteButton.setImage(Constants.heartFillImage, for: .normal)
     }
     
     private func configCell() {
+        addSubview(imageCard)
+        addSubview(addFavoriteButton)
         imageCard.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview().offset(Constants.imageCardBottomPadding)
+            make.bottom.equalToSuperview().inset(Constants.imageCardBottomPadding)
             make.top.equalToSuperview()
         }
         addFavoriteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(snp.bottom).offset(Constants.addFavoriteButtonCenterYPadding)
-            make.left.equalToSuperview().offset(Constants.addFavoriteButtonLeftPadding)
+            make.bottom.equalTo(snp.bottom)//.inset(Constants.addFavoriteButtonCenterYPadding)
+            make.left.equalToSuperview()//.inset(Constants.addFavoriteButtonLeftPadding)
+            make.width.height.equalTo(Constants.addFavoriteButtonSize)
         }
     }
     
@@ -69,7 +74,7 @@ final class ImageTableViewCell: UITableViewCell {
     private func addFavoriteButtonTapped() {
         print("addFavoriteButtonTapped")
         isFavorite = !isFavorite
-        addFavoriteButton.imageView?.image = isFavorite ? Constants.heartFillImage : Constants.heartImage
+        addFavoriteButton.setImage(isFavorite ? Constants.heartFillImage : Constants.heartImage, for: .normal)
         delegate.changeImageStatus(isFavorite: isFavorite)
     }
     
@@ -85,8 +90,9 @@ extension ImageTableViewCell {
         static let imageCardBottomPadding: CGFloat = 30
         static let addFavoriteButtonLeftPadding: CGFloat = 10
         static let addFavoriteButtonCenterYPadding: CGFloat = 15
+        static let addFavoriteButtonSize: CGFloat = 30
         static let heartImage: UIImage? = .init(systemName: "heart")?.withTintColor(.gray)
         static let heartFillImage: UIImage? = .init(systemName: "heart.fill")?.withTintColor(.red)
-        static let backgroundColor: UIColor = .lightGray
+        static let backgroundColor: UIColor = .clear
     }
 }

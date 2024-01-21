@@ -13,6 +13,9 @@ final class ImageTableView: UITableView {
     init(imageArray: [ImageTableViewCellModel]) {
         self.imageArray = imageArray
         super.init(frame: CGRectZero, style: UITableView.Style.plain)
+        delegate = self
+        dataSource = self
+        backgroundColor = Constants.backgroundColor
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +46,10 @@ extension ImageTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.tableViewCellHeight
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 // MARK: - ImageTableViewCellDelegate
@@ -56,6 +63,7 @@ extension ImageTableView: ImageTableViewCellDelegate {
 // MARK: - Constants
 extension ImageTableView {
     enum Constants {
-        static let tableViewCellHeight: CGFloat = 150
+        static let tableViewCellHeight: CGFloat = 300
+        static let backgroundColor: UIColor = .clear
     }
 }
