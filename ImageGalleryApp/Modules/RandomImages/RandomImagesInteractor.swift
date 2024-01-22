@@ -23,10 +23,14 @@ final class RandomImagesInteractor {
 
 extension RandomImagesInteractor: RandomImagesBusinessLogic {
     func loadData() {
-        var response: RandomImagesModels.Response = []
-        for i in 0..<20 {
-            response.append(dataLoader.loadData())
-        }
+        var response = dataLoader.loadData(numberOfRequests: Constants.numberOfRequest)
         presenter.presentData(response: response)
+    }
+}
+
+// MARK: - Constants
+extension RandomImagesInteractor {
+    enum Constants {
+        static let numberOfRequest = 20
     }
 }

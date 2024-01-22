@@ -37,6 +37,7 @@ extension ImageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = imageArray[indexPath.row]
         let cell = ImageTableViewCell(image: cellModel.image, isFavorite: cellModel.isFavorite, delegate: self)
+        cell.selectionStyle = .none
         return cell
     }
 }
@@ -45,10 +46,6 @@ extension ImageTableView: UITableViewDataSource {
 extension ImageTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.tableViewCellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 

@@ -29,14 +29,12 @@ final class ImageTableViewCell: UITableViewCell {
     private let addFavoriteButton: UIButton = {
         let button = UIButton()
         button.setImage(Constants.heartImage, for: .normal)
-        button.addTarget(ImageTableViewCell.self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
-        button.isEnabled = true
+        button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
         return button
     }()
     
     init(image: UIImage?, isFavorite: Bool, delegate: ImageTableViewCellDelegate) {
         self.image = image
-        
         self.isFavorite = isFavorite
         self.delegate = delegate
         super.init(style: .default, reuseIdentifier: "cell")
@@ -44,6 +42,7 @@ final class ImageTableViewCell: UITableViewCell {
         configCell()
         setImage()
         isImageFavorite()
+        
     }
     
     private func setImage() {
@@ -57,15 +56,15 @@ final class ImageTableViewCell: UITableViewCell {
     
     private func configCell() {
         addSubview(imageCard)
-        addSubview(addFavoriteButton)
+        contentView.addSubview(addFavoriteButton)
         imageCard.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview().inset(Constants.imageCardBottomPadding)
             make.top.equalToSuperview()
         }
         addFavoriteButton.snp.makeConstraints { make in
-            make.bottom.equalTo(snp.bottom)//.inset(Constants.addFavoriteButtonCenterYPadding)
-            make.left.equalToSuperview()//.inset(Constants.addFavoriteButtonLeftPadding)
+            make.bottom.equalTo(snp.bottom).inset(Constants.addFavoriteButtonCenterYPadding)
+            make.left.equalToSuperview().inset(Constants.addFavoriteButtonLeftPadding)
             make.width.height.equalTo(Constants.addFavoriteButtonSize)
         }
     }
