@@ -8,7 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol IRandomImagesView: AnyObject {
+    func getMoreImages()
+}
+
 final class RandomImagesView: UIView {
+    
+    weak var delegate: IRandomImagesView?
     
     private let tableView: ImageTableView = {
         let tableView = ImageTableView(imageArray: [])
@@ -34,6 +40,7 @@ final class RandomImagesView: UIView {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
+        tableView.endOfTableDelegate = self
         backgroundColor = Constants.backgroundColor
     }
 }
@@ -42,5 +49,12 @@ final class RandomImagesView: UIView {
 extension RandomImagesView {
     enum Constants {
         static let backgroundColor: UIColor = .white
+    }
+}
+
+// MARK: - IEndOfTableHandler
+extension RandomImagesView: IEndOfTableHandler {
+    func endOfTableReached() {
+        delegate?.getMoreImages()
     }
 }

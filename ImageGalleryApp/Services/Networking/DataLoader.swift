@@ -15,7 +15,7 @@ final class DataLoader {
     
 }
 
-// MARK: - IImageLoader
+// MARK: - IDataLoader
 extension DataLoader: IDataLoader {
     func loadData(numberOfRequests: Int) -> [Data?] {
         let group = DispatchGroup()

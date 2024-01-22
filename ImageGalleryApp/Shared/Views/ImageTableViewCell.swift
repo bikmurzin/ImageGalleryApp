@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol ImageTableViewCellDelegate {
+protocol ImageTableViewCellDelegate: AnyObject {
     func changeImageStatus(isFavorite: Bool)
 }
 
@@ -18,7 +18,7 @@ final class ImageTableViewCell: UITableViewCell {
     
     private var isFavorite: Bool
     
-    private let delegate: ImageTableViewCellDelegate
+    weak var delegate: ImageTableViewCellDelegate?
     
     private let imageCard: UIImageView = {
         let imageView = UIImageView()
@@ -33,10 +33,9 @@ final class ImageTableViewCell: UITableViewCell {
         return button
     }()
     
-    init(image: UIImage?, isFavorite: Bool, delegate: ImageTableViewCellDelegate) {
+    init(image: UIImage?, isFavorite: Bool) {
         self.image = image
         self.isFavorite = isFavorite
-        self.delegate = delegate
         super.init(style: .default, reuseIdentifier: "cell")
         backgroundColor = Constants.backgroundColor
         configCell()
@@ -74,7 +73,7 @@ final class ImageTableViewCell: UITableViewCell {
         print("addFavoriteButtonTapped")
         isFavorite = !isFavorite
         addFavoriteButton.setImage(isFavorite ? Constants.heartFillImage : Constants.heartImage, for: .normal)
-        delegate.changeImageStatus(isFavorite: isFavorite)
+        delegate?.changeImageStatus(isFavorite: isFavorite)
     }
     
     required init?(coder: NSCoder) {

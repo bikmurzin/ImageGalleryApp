@@ -28,15 +28,23 @@ final class RandomImagesViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .green
         self.view = randomImagesView
+        randomImagesView.delegate = self
         interactor.loadData()
     }
 }
 
+// MARK: - RandomImagesDisplayLogic
 extension RandomImagesViewController: RandomImagesDisplayLogic {
     func displayData(viewModel: RandomImagesModels.ViewModel) {
         var imageArray: [ImageTableViewCellModel] = viewModel.images.map { image in
             return ImageTableViewCellModel(image: image, url: nil, isFavorite: false)
         }
         randomImagesView.addImageCard(cellViewModel: imageArray)
+    }
+}
+
+extension RandomImagesViewController: IRandomImagesView {
+    func getMoreImages() {
+        interactor.loadData()
     }
 }

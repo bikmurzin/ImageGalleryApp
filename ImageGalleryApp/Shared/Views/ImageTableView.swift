@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol IEndOfTableHandler: AnyObject {
+    func endOfTableReached()
+}
+
 final class ImageTableView: UITableView {
+    weak var endOfTableDelegate: IEndOfTableHandler?
     private (set) var imageArray: [ImageTableViewCellModel] = []
     
     init(imageArray: [ImageTableViewCellModel]) {
@@ -36,7 +41,8 @@ extension ImageTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = imageArray[indexPath.row]
-        let cell = ImageTableViewCell(image: cellModel.image, isFavorite: cellModel.isFavorite, delegate: self)
+        let cell = ImageTableViewCell(image: cellModel.image, isFavorite: cellModel.isFavorite)
+        cell.delegate = self
         cell.selectionStyle = .none
         return cell
     }
@@ -46,6 +52,12 @@ extension ImageTableView: UITableViewDataSource {
 extension ImageTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.tableViewCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == imageArray.count {
+            endOfTableDelegate?.endOfTableReached()
+        }
     }
 }
 

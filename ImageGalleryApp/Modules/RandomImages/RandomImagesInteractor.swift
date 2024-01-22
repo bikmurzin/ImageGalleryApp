@@ -5,7 +5,7 @@
 //  Date: 18.01.2024
 //
 
-
+import Foundation
 
 protocol RandomImagesBusinessLogic: AnyObject {
     func loadData()
@@ -23,8 +23,17 @@ final class RandomImagesInteractor {
 
 extension RandomImagesInteractor: RandomImagesBusinessLogic {
     func loadData() {
-        var response = dataLoader.loadData(numberOfRequests: Constants.numberOfRequest)
-        presenter.presentData(response: response)
+        let queue = DispatchQueue.global()
+        let group = DispatchGroup()
+        var response = RandomImagesModels.Response()
+        group.enter()
+        queue.async {
+             response = self.dataLoader.loadData(numberOfRequests: Constants.numberOfRequest)
+            group.leave()
+        }
+        group.notify(queue: .main) {
+            self.presenter.presentData(response: response)
+        }
     }
 }
 
