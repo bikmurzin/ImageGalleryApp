@@ -9,9 +9,40 @@ import Foundation
 import UIKit
 
 enum RandomImagesModels {
-    typealias Response = [Data?]
     
-    struct ViewModel {
-        let images: [UIImage?]
+    struct Response: Equatable {
+        var dataArray: [DataModel]
+        
+        struct DataModel: Equatable {
+            let data: Data?
+            let imageId: String?
+            var isFavorite: Bool
+            var filePath: URL?
+        }
+    }
+    
+    struct ViewModel: Equatable {
+        var imageModels: [ImageModel]
+        
+        struct ImageModel: Equatable {
+            let image: UIImage?
+            var isFavorite: Bool
+        }
+    }
+}
+
+enum RandomImagesFileWorkingModels {
+    struct Request: Equatable {
+        let imageId: Int
+    }
+    
+    struct Response: Equatable {
+        let imageId: Int
+        let isFavorite: Bool
+    }
+    
+    struct ViewModel: Equatable {
+        let imageId: Int
+        let isFavorite: Bool
     }
 }

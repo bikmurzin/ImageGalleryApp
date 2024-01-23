@@ -7,41 +7,56 @@
 
 import UIKit
 
-protocol IEndOfTableHandler: AnyObject {
+protocol ImageTableViewDelegate: AnyObject {
     func endOfTableReached()
+    func changeImageStatus(cellID: Int, isFavorite: Bool)
 }
 
 final class ImageTableView: UITableView {
-    weak var endOfTableDelegate: IEndOfTableHandler?
-    private (set) var imageArray: [ImageTableViewCellModel] = []
+    weak var imageTableViewDelegate: ImageTableViewDelegate?
+    private (set) var imageArray = RandomImagesModels.ViewModel(imageModels: [])
     
-    init(imageArray: [ImageTableViewCellModel]) {
-        self.imageArray = imageArray
+    init() {
         super.init(frame: CGRectZero, style: UITableView.Style.plain)
         delegate = self
         dataSource = self
         backgroundColor = Constants.backgroundColor
+        self.registerCells()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImages(imageArray: [ImageTableViewCellModel]) {
-        self.imageArray.append(contentsOf: imageArray)
+    func addImages(imageArray: RandomImagesModels.ViewModel) {
+        self.imageArray = imageArray
         reloadData()
+    }
+    
+    func toggleImageCardStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
+        imageArray.imageModels[viewModel.imageId].isFavorite = viewModel.isFavorite
+        let indexPath = IndexPath(row: viewModel.imageId, section: 0)
+        let cell = cellForRow(at: indexPath) as? ImageTableViewCell
+        cell?.favoriteChange(isFavorite: viewModel.isFavorite)
+    }
+    
+    private func registerCells() {
+        register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
     }
 }
 
 // MARK: - UITableViewDataSource
 extension ImageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        imageArray.count
+        imageArray.imageModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellModel = imageArray[indexPath.row]
-        let cell = ImageTableViewCell(image: cellModel.image, isFavorite: cellModel.isFavorite)
+        let imageModel = imageArray.imageModels[indexPath.row]
+        guard let cell = dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier, for: indexPath) as? ImageTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.setImage(imageModel: imageModel)
         cell.delegate = self
         cell.selectionStyle = .none
         return cell
@@ -55,8 +70,8 @@ extension ImageTableView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == imageArray.count {
-            endOfTableDelegate?.endOfTableReached()
+        if indexPath.row + 1 == imageArray.imageModels.count {
+            imageTableViewDelegate?.endOfTableReached()
         }
     }
 }
@@ -64,8 +79,9 @@ extension ImageTableView: UITableViewDelegate {
 // MARK: - ImageTableViewCellDelegate
 extension ImageTableView: ImageTableViewCellDelegate {
     
-    func changeImageStatus(isFavorite: Bool) {
-        // TODO: - Call ImageTableViewDelegate
+    func changeImageStatus(isFavorite: Bool, cell: UITableViewCell) {
+        guard let indexPath = indexPath(for: cell) else { return }
+        imageTableViewDelegate?.changeImageStatus(cellID: indexPath.row, isFavorite: isFavorite)
     }
 }
 

@@ -8,16 +8,17 @@
 import UIKit
 import SnapKit
 
-protocol IRandomImagesView: AnyObject {
+protocol RandomImagesViewDelegate: AnyObject {
     func getMoreImages()
+    func updateImageStatus(cellID: Int, isFavorite: Bool)
 }
 
 final class RandomImagesView: UIView {
     
-    weak var delegate: IRandomImagesView?
+    weak var delegate: RandomImagesViewDelegate?
     
     private let tableView: ImageTableView = {
-        let tableView = ImageTableView(imageArray: [])
+        let tableView = ImageTableView()
         tableView.backgroundColor = .clear
         return tableView
     }()
@@ -31,8 +32,12 @@ final class RandomImagesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImageCard(cellViewModel: [ImageTableViewCellModel]) {
-        tableView.addImages(imageArray: cellViewModel)
+    func addImageCard(viewModel: RandomImagesModels.ViewModel) {
+        tableView.addImages(imageArray: viewModel)
+    }
+    
+    func toggleImageCardStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
+        tableView.toggleImageCardStatus(viewModel: viewModel)
     }
     
     private func configView() {
@@ -40,7 +45,7 @@ final class RandomImagesView: UIView {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
-        tableView.endOfTableDelegate = self
+        tableView.imageTableViewDelegate = self
         backgroundColor = Constants.backgroundColor
     }
 }
@@ -53,7 +58,11 @@ extension RandomImagesView {
 }
 
 // MARK: - IEndOfTableHandler
-extension RandomImagesView: IEndOfTableHandler {
+extension RandomImagesView: ImageTableViewDelegate {
+    func changeImageStatus(cellID: Int, isFavorite: Bool) {
+        delegate?.updateImageStatus(cellID: cellID, isFavorite: isFavorite)
+    }
+    
     func endOfTableReached() {
         delegate?.getMoreImages()
     }

@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 
 protocol ImageTableViewCellDelegate: AnyObject {
-    func changeImageStatus(isFavorite: Bool)
+    func changeImageStatus(isFavorite: Bool, cell: UITableViewCell)
 }
 
 final class ImageTableViewCell: UITableViewCell {
     
-    private let image: UIImage?
+    static let identifier = "imageTableViewCell"
     
-    private var isFavorite: Bool
+    private var isFavorite: Bool = false
     
     weak var delegate: ImageTableViewCellDelegate?
     
@@ -33,24 +33,25 @@ final class ImageTableViewCell: UITableViewCell {
         return button
     }()
     
-    init(image: UIImage?, isFavorite: Bool) {
-        self.image = image
-        self.isFavorite = isFavorite
-        super.init(style: .default, reuseIdentifier: "cell")
-        backgroundColor = Constants.backgroundColor
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         configCell()
-        setImage()
         isImageFavorite()
-        
     }
     
-    private func setImage() {
-        imageCard.image = image
+    func setImage(imageModel: RandomImagesModels.ViewModel.ImageModel) {
+        imageCard.image = imageModel.image
+        self.isFavorite = imageModel.isFavorite
+        isImageFavorite()
+    }
+    
+    func favoriteChange(isFavorite: Bool) {
+        self.isFavorite = isFavorite
+        isImageFavorite()
     }
     
     private func isImageFavorite() {
-        guard isFavorite else { return }
-        addFavoriteButton.setImage(Constants.heartFillImage, for: .normal)
+        addFavoriteButton.setImage(isFavorite ? Constants.heartFillImage : Constants.heartImage, for: .normal)
     }
     
     private func configCell() {
@@ -66,14 +67,12 @@ final class ImageTableViewCell: UITableViewCell {
             make.left.equalToSuperview().inset(Constants.addFavoriteButtonLeftPadding)
             make.width.height.equalTo(Constants.addFavoriteButtonSize)
         }
+        backgroundColor = Constants.backgroundColor
     }
     
     @objc
     private func addFavoriteButtonTapped() {
-        print("addFavoriteButtonTapped")
-        isFavorite = !isFavorite
-        addFavoriteButton.setImage(isFavorite ? Constants.heartFillImage : Constants.heartImage, for: .normal)
-        delegate?.changeImageStatus(isFavorite: isFavorite)
+        delegate?.changeImageStatus(isFavorite: isFavorite, cell: self)
     }
     
     required init?(coder: NSCoder) {

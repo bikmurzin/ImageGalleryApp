@@ -8,7 +8,7 @@
 import UIKit
 
 protocol IDataLoader {
-    func loadData(numberOfRequests: Int) -> [Data?]
+    func loadData(numberOfRequests: Int) -> [(data: Data?, urlResponse: URLResponse?)]
 }
 
 final class DataLoader {
@@ -17,18 +17,18 @@ final class DataLoader {
 
 // MARK: - IDataLoader
 extension DataLoader: IDataLoader {
-    func loadData(numberOfRequests: Int) -> [Data?] {
+    func loadData(numberOfRequests: Int) -> [(data: Data?, urlResponse: URLResponse?)] {
         let group = DispatchGroup()
         let queue = DispatchQueue(label: "addElementsToArray")
-        let url = URL(string: "\(Constants.api)/\(Constants.imageWidth)/\(Constants.imageHeight)")
-        var returnData: [Data?] = []
+        let url = URL(string: "\(Constants.api)/\(Constants.imageWidth)/\(Constants.imageHeight)\(Constants.fileEnding)")
+        var returnData: [(data: Data?, urlResponse: URLResponse?)] = []
         for _ in 0..<numberOfRequests {
             group.enter()
             let response = RequestManager.makeRequest(url: url) { result in
                 switch result {
                 case .success(let response):
                     queue.async {
-                        returnData.append(response.data)
+                        returnData.append((response.data, response.urlResponse))
                         group.leave()
                     }
                     let urlResponse = response.urlResponse
@@ -50,5 +50,6 @@ extension DataLoader {
         static let api = "https://picsum.photos/"
         static let imageWidth = "200"
         static let imageHeight = "300"
+        static let fileEnding = ".jpg"
     }
 }
