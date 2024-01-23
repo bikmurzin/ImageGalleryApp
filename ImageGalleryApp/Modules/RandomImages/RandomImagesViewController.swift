@@ -27,7 +27,6 @@ final class RandomImagesViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = .green
         self.view = randomImagesView
         randomImagesView.delegate = self
         interactor.loadData()

@@ -9,7 +9,7 @@ import UIKit
 
 protocol IFileWorker {
     func saveDataToFile(data: Data, fileName: String) -> URL
-    func loadData(fileURL: URL) -> Data?
+    func loadData(fileName: String) -> Data?
 }
 
 final class FileWorker {
@@ -29,8 +29,9 @@ extension FileWorker: IFileWorker {
         return filePath
     }
     
-    func loadData(fileURL: URL) -> Data? {
-        let data = try? Data(contentsOf: fileURL)
+    func loadData(fileName: String) -> Data? {
+        let imagePath = getDocumentsDirectory().appendingPathComponent(fileName, conformingTo: .url)
+        let data = try? Data(contentsOf: imagePath)
         return data
     }
 }

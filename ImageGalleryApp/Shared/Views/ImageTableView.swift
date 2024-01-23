@@ -14,7 +14,7 @@ protocol ImageTableViewDelegate: AnyObject {
 
 final class ImageTableView: UITableView {
     weak var imageTableViewDelegate: ImageTableViewDelegate?
-    private (set) var imageArray = RandomImagesModels.ViewModel(imageModels: [])
+    private (set) var imageArray = ImageTableModels.ViewModel(imageModels: [])
     
     init() {
         super.init(frame: CGRectZero, style: UITableView.Style.plain)
@@ -28,12 +28,12 @@ final class ImageTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImages(imageArray: RandomImagesModels.ViewModel) {
+    func addImages(imageArray: ImageTableModels.ViewModel) {
         self.imageArray = imageArray
         reloadData()
     }
     
-    func toggleImageCardStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
+    func toggleImageCardStatus(viewModel: ImageTableModels.ViewResponse) {
         imageArray.imageModels[viewModel.imageId].isFavorite = viewModel.isFavorite
         let indexPath = IndexPath(row: viewModel.imageId, section: 0)
         let cell = cellForRow(at: indexPath) as? ImageTableViewCell

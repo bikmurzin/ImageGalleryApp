@@ -39,7 +39,7 @@ final class ImageTableViewCell: UITableViewCell {
         isImageFavorite()
     }
     
-    func setImage(imageModel: RandomImagesModels.ViewModel.ImageModel) {
+    func setImage(imageModel: ImageTableModels.ViewModel.ImageModel) {
         imageCard.image = imageModel.image
         self.isFavorite = imageModel.isFavorite
         isImageFavorite()

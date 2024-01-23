@@ -12,6 +12,9 @@
 		7020178D2B5EFB6500449A46 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7020178C2B5EFB6500449A46 /* RealmSwift */; };
 		702017902B5F9D5F00449A46 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7020178F2B5F9D5F00449A46 /* RealmManager.swift */; };
 		702017922B5F9E0A00449A46 /* DBModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017912B5F9E0A00449A46 /* DBModels.swift */; };
+		702017942B5FB35000449A46 /* FavoriteImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017932B5FB35000449A46 /* FavoriteImagesView.swift */; };
+		702017962B5FB3BB00449A46 /* FavoriteImagesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017952B5FB3BA00449A46 /* FavoriteImagesModels.swift */; };
+		702017982B5FB44F00449A46 /* ImageTableModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017972B5FB44F00449A46 /* ImageTableModels.swift */; };
 		702DECF22B5984C700CFBCD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DECF12B5984C700CFBCD7 /* AppDelegate.swift */; };
 		702DECF42B5984C700CFBCD7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DECF32B5984C700CFBCD7 /* SceneDelegate.swift */; };
 		702DECFB2B5984C900CFBCD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 702DECFA2B5984C900CFBCD7 /* Assets.xcassets */; };
@@ -41,6 +44,9 @@
 		702017872B5E8FBF00449A46 /* FileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWorker.swift; sourceTree = "<group>"; };
 		7020178F2B5F9D5F00449A46 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		702017912B5F9E0A00449A46 /* DBModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModels.swift; sourceTree = "<group>"; };
+		702017932B5FB35000449A46 /* FavoriteImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImagesView.swift; sourceTree = "<group>"; };
+		702017952B5FB3BA00449A46 /* FavoriteImagesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImagesModels.swift; sourceTree = "<group>"; };
+		702017972B5FB44F00449A46 /* ImageTableModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableModels.swift; sourceTree = "<group>"; };
 		702DECEE2B5984C700CFBCD7 /* ImageGalleryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGalleryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		702DECF12B5984C700CFBCD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		702DECF32B5984C700CFBCD7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +201,8 @@
 				702DED1A2B59AB7700CFBCD7 /* FavoriteImagesViewController.swift */,
 				702DED1C2B59AB7F00CFBCD7 /* FavoriteImagesInteractor.swift */,
 				702DED1E2B59AB8400CFBCD7 /* FavoriteImagesPresenter.swift */,
+				702017932B5FB35000449A46 /* FavoriteImagesView.swift */,
+				702017952B5FB3BA00449A46 /* FavoriteImagesModels.swift */,
 			);
 			path = FavoritesImages;
 			sourceTree = "<group>";
@@ -204,6 +212,7 @@
 			children = (
 				702DED2A2B5A8A9D00CFBCD7 /* ImageTableViewCell.swift */,
 				702DED2C2B5A964300CFBCD7 /* ImageTableView.swift */,
+				702017972B5FB44F00449A46 /* ImageTableModels.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -330,11 +339,14 @@
 				702DED172B59AB3200CFBCD7 /* RandomImagesPresenter.swift in Sources */,
 				709D6D252B5C5A3800D8F36E /* DataLoader.swift in Sources */,
 				702DED232B59B20B00CFBCD7 /* FavoriteImagesBuilder.swift in Sources */,
+				702017942B5FB35000449A46 /* FavoriteImagesView.swift in Sources */,
 				702017882B5E8FBF00449A46 /* FileWorker.swift in Sources */,
 				702DED2B2B5A8A9D00CFBCD7 /* ImageTableViewCell.swift in Sources */,
+				702017982B5FB44F00449A46 /* ImageTableModels.swift in Sources */,
 				702DED132B59AB1400CFBCD7 /* RandomImagesViewController.swift in Sources */,
 				702DED2D2B5A964300CFBCD7 /* ImageTableView.swift in Sources */,
 				702DECF42B5984C700CFBCD7 /* SceneDelegate.swift in Sources */,
+				702017962B5FB3BB00449A46 /* FavoriteImagesModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

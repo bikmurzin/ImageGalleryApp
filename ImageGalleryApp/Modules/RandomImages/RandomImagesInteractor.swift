@@ -68,7 +68,7 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
             if let stringImageId = loadedImages[request.imageId].imageId,
                let intImageId = Int(stringImageId),
                let filePathURL = loadedImages[request.imageId].filePath {
-                let imageModel = ImageModel(imageId: intImageId, filePath: filePathURL.absoluteString, isFavorite: loadedImages[request.imageId].isFavorite)
+                let imageModel = ImageModel(imageId: intImageId, filePath: filePathURL.absoluteString, isFavorite: !isFavorite)
                 saveDataToDB(imageModel: imageModel)
             }
             if loadedImages[request.imageId].filePath != nil {

@@ -29,6 +29,7 @@ final class RealmManager {
         guard let realm = realm else { return [] }
         let dbItems = realm.objects(ImageDBModel.self)
         let imageModels: [ImageModel] = dbItems.map { result in
+            print("result.filePath: \(result.filePath)")
             return ImageModel(imageId: result.imageId, filePath: result.filePath, isFavorite: result.isFavorite)
         }
         return imageModels

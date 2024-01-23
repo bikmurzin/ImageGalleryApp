@@ -21,17 +21,11 @@ enum RandomImagesModels {
         }
     }
     
-    struct ViewModel: Equatable {
-        var imageModels: [ImageModel]
-        
-        struct ImageModel: Equatable {
-            let image: UIImage?
-            var isFavorite: Bool
-        }
-    }
+    typealias ViewModel = ImageTableModels.ViewModel
 }
 
 enum RandomImagesFileWorkingModels {
+    
     struct Request: Equatable {
         let imageId: Int
     }
@@ -41,8 +35,5 @@ enum RandomImagesFileWorkingModels {
         let isFavorite: Bool
     }
     
-    struct ViewModel: Equatable {
-        let imageId: Int
-        let isFavorite: Bool
-    }
+    typealias ViewModel = ImageTableModels.ViewResponse
 }
