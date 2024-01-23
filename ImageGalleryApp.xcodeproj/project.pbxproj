@@ -10,6 +10,8 @@
 		702017882B5E8FBF00449A46 /* FileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017872B5E8FBF00449A46 /* FileWorker.swift */; };
 		7020178B2B5EFB6500449A46 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7020178A2B5EFB6500449A46 /* Realm */; };
 		7020178D2B5EFB6500449A46 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7020178C2B5EFB6500449A46 /* RealmSwift */; };
+		702017902B5F9D5F00449A46 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7020178F2B5F9D5F00449A46 /* RealmManager.swift */; };
+		702017922B5F9E0A00449A46 /* DBModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702017912B5F9E0A00449A46 /* DBModels.swift */; };
 		702DECF22B5984C700CFBCD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DECF12B5984C700CFBCD7 /* AppDelegate.swift */; };
 		702DECF42B5984C700CFBCD7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DECF32B5984C700CFBCD7 /* SceneDelegate.swift */; };
 		702DECFB2B5984C900CFBCD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 702DECFA2B5984C900CFBCD7 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		702017872B5E8FBF00449A46 /* FileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWorker.swift; sourceTree = "<group>"; };
+		7020178F2B5F9D5F00449A46 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		702017912B5F9E0A00449A46 /* DBModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModels.swift; sourceTree = "<group>"; };
 		702DECEE2B5984C700CFBCD7 /* ImageGalleryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGalleryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		702DECF12B5984C700CFBCD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		702DECF32B5984C700CFBCD7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +87,15 @@
 				702017872B5E8FBF00449A46 /* FileWorker.swift */,
 			);
 			path = FileManager;
+			sourceTree = "<group>";
+		};
+		7020178E2B5F9D4900449A46 /* DBWorking */ = {
+			isa = PBXGroup;
+			children = (
+				7020178F2B5F9D5F00449A46 /* RealmManager.swift */,
+				702017912B5F9E0A00449A46 /* DBModels.swift */,
+			);
+			path = DBWorking;
 			sourceTree = "<group>";
 		};
 		702DECE52B5984C700CFBCD7 = {
@@ -135,6 +148,7 @@
 		702DED072B5987FD00CFBCD7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7020178E2B5F9D4900449A46 /* DBWorking */,
 				702017862B5E8D1A00449A46 /* FileManager */,
 				709D6D212B5C55A200D8F36E /* Networking */,
 			);
@@ -304,11 +318,13 @@
 				709D6D272B5C6BC800D8F36E /* RandomImagesModels.swift in Sources */,
 				709D6D202B5C555500D8F36E /* URLSession+Ext.swift in Sources */,
 				709D6D232B5C55B700D8F36E /* RequestManager.swift in Sources */,
+				702017902B5F9D5F00449A46 /* RealmManager.swift in Sources */,
 				709D6D292B5C6F0400D8F36E /* RandomImagesView.swift in Sources */,
 				702DED1F2B59AB8400CFBCD7 /* FavoriteImagesPresenter.swift in Sources */,
 				702DECF22B5984C700CFBCD7 /* AppDelegate.swift in Sources */,
 				702DED212B59AF2900CFBCD7 /* RandomImagesBuilder.swift in Sources */,
 				702DED302B5A97EC00CFBCD7 /* ImageTableViewCellModel.swift in Sources */,
+				702017922B5F9E0A00449A46 /* DBModels.swift in Sources */,
 				702DED0B2B59899D00CFBCD7 /* MainTabCoordinator.swift in Sources */,
 				702DED152B59AB2500CFBCD7 /* RandomImagesInteractor.swift in Sources */,
 				702DED172B59AB3200CFBCD7 /* RandomImagesPresenter.swift in Sources */,
