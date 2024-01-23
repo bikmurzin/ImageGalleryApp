@@ -34,4 +34,34 @@ final class RealmManager {
         }
         return imageModels
     }
+    
+    func deleteDataFromDB(imageId: Int) {
+        guard let realm = realm else { return }
+        do {
+            try realm.write {
+                let objects = realm.objects(ImageDBModel.self).where {
+                    $0.imageId == imageId
+                }
+                realm.delete(objects)
+            }
+        } catch let error as NSError {
+            print("Ошибка при удалении из БД: \(error)")
+        }
+    }
+    
+    func isObjectExists(imageId: Int) -> Bool {
+        guard let realm = realm else { return false }
+        var isObjectExists = false
+        do {
+            try realm.write {
+                let objects = realm.objects(ImageDBModel.self).where {
+                    $0.imageId == imageId
+                }
+                isObjectExists = !objects.isEmpty
+            }
+        } catch let error as NSError {
+            print("Ошибка при поиске объекта: \(error)")
+        }
+        return isObjectExists
+    }
 }

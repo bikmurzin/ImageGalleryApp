@@ -31,6 +31,11 @@ final class RandomImagesViewController: UIViewController {
         randomImagesView.delegate = self
         interactor.loadData()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        interactor.checkFavoriteImages()
+        randomImagesView.startLoading()
+    }
 }
 
 // MARK: - RandomImagesDisplayLogic
@@ -38,6 +43,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
     
     func displayData(viewModel: RandomImagesModels.ViewModel) {
         randomImagesView.addImageCard(viewModel: viewModel)
+        randomImagesView.stopLoading()
     }
     
     func updateImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
@@ -53,5 +59,6 @@ extension RandomImagesViewController: RandomImagesViewDelegate {
     
     func getMoreImages() {
         interactor.loadData()
+        randomImagesView.startLoading()
     }
 }

@@ -23,6 +23,13 @@ final class RandomImagesView: UIView {
         return tableView
     }()
     
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .large
+        activityIndicator.color = Constants.activityIndicatorColor
+        return activityIndicator
+    }()
+    
     init() {
         super.init(frame: CGRectZero)
         configView()
@@ -40,12 +47,26 @@ final class RandomImagesView: UIView {
         tableView.toggleImageCardStatus(viewModel: viewModel)
     }
     
+    func startLoading() {
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+    
+    func stopLoading() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+    }
+    
     private func configView() {
         addSubview(tableView)
+        addSubview(activityIndicator)
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
         tableView.imageTableViewDelegate = self
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
         backgroundColor = Constants.backgroundColor
     }
 }
@@ -54,6 +75,7 @@ final class RandomImagesView: UIView {
 extension RandomImagesView {
     enum Constants {
         static let backgroundColor: UIColor = .white
+        static let activityIndicatorColor: UIColor = .blue
     }
 }
 

@@ -25,6 +25,7 @@ final class FavoriteImagesInteractor {
     
     private func loadSavedData() {
         let dbItems = realmManager.loadDataFromDB()
+        loadedImages.removeAll()
         for dbItem in dbItems {
             if let url = URL(string: dbItem.filePath) {
                 let data = fileWorker.loadData(fileName: "\(dbItem.imageId)\(Constants.endNameOfFile)")
@@ -32,6 +33,15 @@ final class FavoriteImagesInteractor {
                 self.loadedImages.append(loadedImage)
             }
         }
+    }
+    
+    private func deleteImage(elementId: Int) {
+        let loadedImage = loadedImages[elementId]
+        if let intImageId = Int(loadedImage.imageId) {
+            realmManager.deleteDataFromDB(imageId: intImageId)
+            fileWorker.deleteFile(fileName: "\(intImageId)\(Constants.endNameOfFile)")
+        }
+        loadedImages.remove(at: elementId)
     }
 }
 
@@ -45,7 +55,9 @@ extension FavoriteImagesInteractor: FavoriteImagesBusinessLogic {
     }
     
     func deleteFromFavorites(request: FavoriteImagesModels.Request) {
-        
+        deleteImage(elementId: request.elementId)
+        let response = FavoriteImagesModels.Response(dataArray: self.loadedImages)
+        self.presenter.presentData(response: response)
     }
 }
 

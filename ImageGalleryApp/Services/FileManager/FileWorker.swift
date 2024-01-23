@@ -10,6 +10,7 @@ import UIKit
 protocol IFileWorker {
     func saveDataToFile(data: Data, fileName: String) -> URL
     func loadData(fileName: String) -> Data?
+    func deleteFile(fileName: String)
 }
 
 final class FileWorker {
@@ -33,5 +34,15 @@ extension FileWorker: IFileWorker {
         let imagePath = getDocumentsDirectory().appendingPathComponent(fileName, conformingTo: .url)
         let data = try? Data(contentsOf: imagePath)
         return data
+    }
+    
+    func deleteFile(fileName: String) {
+        let imagePath = getDocumentsDirectory().appendingPathComponent(fileName, conformingTo: .url)
+        let fileManager = FileManager.default
+        do {
+            try fileManager.removeItem(at: imagePath)
+        } catch let error as NSError {
+            print("Возникла ошибка при удалении файла: \(error)")
+        }
     }
 }

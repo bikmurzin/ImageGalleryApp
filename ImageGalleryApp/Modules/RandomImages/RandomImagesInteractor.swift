@@ -10,6 +10,7 @@ import Foundation
 protocol RandomImagesBusinessLogic: AnyObject {
     func loadData()
     func toggleImageStatus(request: RandomImagesFileWorkingModels.Request)
+    func checkFavoriteImages()
 }
 
 final class RandomImagesInteractor {
@@ -29,12 +30,22 @@ final class RandomImagesInteractor {
               let unwrFileId = fileId,
               let intFileId = Int(unwrFileId)
         else { return nil }
-        let url = fileWorker.saveDataToFile(data: data, fileName: "\(intFileId).jpg")
+        let url = fileWorker.saveDataToFile(data: data, fileName: "\(intFileId)\(Constants.endNameOfFile)")
         return url
     }
     
     private func saveDataToDB(imageModel: ImageModel) {
         realmManager.saveDataToDB(model: ImageModel(imageId: imageModel.imageId, filePath: imageModel.filePath, isFavorite: imageModel.isFavorite))
+    }
+    
+    private func deleteImage(elementId: Int) {
+        let loadedImage = loadedImages[elementId]
+        if let stringImageId = loadedImage.imageId,
+            let intImageId = Int(stringImageId) {
+            realmManager.deleteDataFromDB(imageId: intImageId)
+            fileWorker.deleteFile(fileName: "\(intImageId)\(Constants.endNameOfFile)")
+        }
+        loadedImages[elementId].isFavorite = false
     }
 }
 
@@ -74,8 +85,25 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
             if loadedImages[request.imageId].filePath != nil {
                 loadedImages[request.imageId].isFavorite = !isFavorite
             }
+        } else {
+            deleteImage(elementId: request.imageId)
         }
         presenter.presentToggledImageStatus(response: RandomImagesFileWorkingModels.Response(imageId: request.imageId, isFavorite: !isFavorite))
+    }
+    
+    func checkFavoriteImages() {
+        loadedImages = loadedImages.map({ loadedImage in
+            var newLoadedImage = loadedImage
+            if let stringImageId = newLoadedImage.imageId,
+               let imageId = Int(stringImageId){
+                let isObjectExists = realmManager.isObjectExists(imageId: imageId)
+                newLoadedImage.isFavorite = isObjectExists
+                return newLoadedImage
+            }
+            return loadedImage
+        })
+        let response = RandomImagesModels.Response(dataArray: self.loadedImages)
+        presenter.presentData(response: response)
     }
 }
 
@@ -84,5 +112,6 @@ extension RandomImagesInteractor {
     enum Constants {
         static let numberOfRequest: Int = 20
         static let uniqueImageIdKey: String = "picsum-id"
+        static let endNameOfFile: String = ".jpg"
     }
 }

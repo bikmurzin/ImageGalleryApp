@@ -30,6 +30,10 @@ final class FavoriteImagesViewController: UIViewController {
         favoriteImagesView.delegate = self
         interactor.loadData()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        interactor.loadData()
+    }
 }
 
 // MARK: - FavoriteImagesDisplayLogic
