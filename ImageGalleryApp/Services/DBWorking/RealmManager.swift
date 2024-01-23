@@ -18,6 +18,7 @@ final class RealmManager {
         do {
             try realm.write({
                 realm.add(dbObject)
+                print(Realm.Configuration.defaultConfiguration.fileURL!)
             })
         } catch let error as NSError {
             print("Something went wrong: \(error)")
