@@ -95,7 +95,6 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
         } else {
             deleteImage(elementId: request.imageId)
         }
-            
         presenter.presentToggledImageStatus(response: RandomImagesFileWorkingModels.Response(imageId: request.imageId, isFavorite: !isFavorite))
     }
     
@@ -110,8 +109,10 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
             }
             return loadedImage
         })
-        let response = RandomImagesModels.Response(dataArray: self.loadedImages)
-        presenter.presentData(response: response)
+        if !loadedImages.isEmpty {
+            let response = RandomImagesModels.Response(dataArray: self.loadedImages)
+            presenter.presentData(response: response)
+        }
     }
 }
 

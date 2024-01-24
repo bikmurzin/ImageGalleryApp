@@ -15,7 +15,7 @@ protocol RandomImagesDisplayLogic: AnyObject {
 final class RandomImagesViewController: UIViewController {
     
     private let interactor: RandomImagesBusinessLogic
-    private let randomImagesView = RandomImagesView()
+    private lazy var randomImagesView = RandomImagesView()
     
     init(interactor: RandomImagesBusinessLogic) {
         self.interactor = interactor
@@ -28,13 +28,18 @@ final class RandomImagesViewController: UIViewController {
     
     override func viewDidLoad() {
         self.view = randomImagesView
+        randomImagesView.startLoading()
         randomImagesView.delegate = self
         interactor.loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        interactor.checkFavoriteImages()
         randomImagesView.startLoading()
+        interactor.checkFavoriteImages()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        randomImagesView.stopLoading()
     }
 }
 
@@ -48,6 +53,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
     
     func displayUpdatedImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
         randomImagesView.toggleImageCardStatus(viewModel: viewModel)
+        randomImagesView.stopLoading()
     }
 }
 
