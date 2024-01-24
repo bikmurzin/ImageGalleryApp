@@ -17,11 +17,11 @@ final class MainTabCoordinator {
         
         let randomImagesBuilder = RandomImagesBuilder()
         let randomImagesVC = randomImagesBuilder.build()
-        randomImagesVC.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "takeoutbag.and.cup.and.straw.fill"), tag: 0)
+        randomImagesVC.tabBarItem = UITabBarItem(title: Constants.randomImagesTabName, image: Constants.randomImagesTabImage, tag: 0)
         
         let favoriteImagesBuilder = FavoriteImagesBuilder()
         let favoriteImagesVC = favoriteImagesBuilder.build()
-        favoriteImagesVC.tabBarItem = UITabBarItem(title: "Избранное", image: UIImage(systemName: "basket.fill"), tag: 1)
+        favoriteImagesVC.tabBarItem = UITabBarItem(title: Constants.favoriteImagesTabName, image: Constants.favoriteImagesTabImage, tag: 1)
         
         (rootViewController as? UITabBarController)?.viewControllers = [randomImagesVC, favoriteImagesVC]
         
@@ -35,5 +35,14 @@ final class MainTabCoordinator {
         (rootViewController as? UITabBarController)?.tabBar.standardAppearance = appearance
         (rootViewController as? UITabBarController)?.tabBar.scrollEdgeAppearance = appearance
         (rootViewController as? UITabBarController)?.tabBar.barTintColor = .red
+    }
+}
+
+extension MainTabCoordinator {
+    enum Constants {
+        static let randomImagesTabName: String = "Лента"
+        static let randomImagesTabImage: UIImage? = UIImage(systemName: "film")
+        static let favoriteImagesTabName: String = "Избранное"
+        static let favoriteImagesTabImage: UIImage? = UIImage(systemName: "heart.circle")
     }
 }
