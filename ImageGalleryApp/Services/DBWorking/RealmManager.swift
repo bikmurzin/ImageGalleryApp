@@ -8,10 +8,20 @@
 import Foundation
 import RealmSwift
 
+protocol IRealmManager {
+    func saveDataToDB(model: ImageModel)
+    func loadDataFromDB() -> [ImageModel]
+    func deleteDataFromDB(imageId: Int)
+    func isObjectExists(imageId: Int) -> Bool
+}
+
 final class RealmManager {
     
     private let realm = try? Realm()
-    
+}
+
+// MARK: - IRealmManager
+extension RealmManager: IRealmManager {
     func saveDataToDB(model: ImageModel) {
         guard let realm = realm else { return }
         let dbObject = ImageDBModel(value: ["imageId": model.imageId, "filePath": model.filePath, "isFavorite": model.isFavorite])

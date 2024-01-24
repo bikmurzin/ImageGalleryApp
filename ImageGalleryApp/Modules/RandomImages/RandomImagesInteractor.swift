@@ -16,13 +16,16 @@ protocol RandomImagesBusinessLogic: AnyObject {
 final class RandomImagesInteractor {
     
     private let presenter: RandomImagesPresentationLogic
-    private let dataLoader = DataLoader()
-    private lazy var fileWorker = FileWorker()
-    private lazy var realmManager = RealmManager()
+    private let dataLoader: IDataLoader
+    private let fileWorker: IFileWorker
+    private let realmManager: IRealmManager
     private var loadedImages = [RandomImagesModels.Response.DataModel]()
     
-    init(presenter: RandomImagesPresentationLogic) {
+    init(presenter: RandomImagesPresentationLogic, dataLoader: IDataLoader = DataLoader(), fileWorker: IFileWorker = FileWorker(), realmManager: IRealmManager = RealmManager()) {
         self.presenter = presenter
+        self.dataLoader = dataLoader
+        self.fileWorker = fileWorker
+        self.realmManager = realmManager
     }
     
     private func saveDataToFile(data: Data?, fileId: String?) -> URL? {
@@ -70,6 +73,10 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
     }
     
     func toggleImageStatus(request: RandomImagesFileWorkingModels.Request) {
+        guard loadedImages.count > request.imageId else {
+            presenter.presentToggledImageStatus(response: RandomImagesFileWorkingModels.Response(imageId: request.imageId, isFavorite: false))
+            return
+        }
         let isFavorite = loadedImages[request.imageId].isFavorite
         if !isFavorite {
             loadedImages[request.imageId].filePath = saveDataToFile(
@@ -88,6 +95,7 @@ extension RandomImagesInteractor: RandomImagesBusinessLogic {
         } else {
             deleteImage(elementId: request.imageId)
         }
+            
         presenter.presentToggledImageStatus(response: RandomImagesFileWorkingModels.Response(imageId: request.imageId, isFavorite: !isFavorite))
     }
     

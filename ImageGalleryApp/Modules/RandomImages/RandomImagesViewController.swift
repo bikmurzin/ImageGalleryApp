@@ -9,7 +9,7 @@ import UIKit
 
 protocol RandomImagesDisplayLogic: AnyObject {
     func displayData(viewModel: RandomImagesModels.ViewModel)
-    func updateImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel)
+    func displayUpdatedImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel)
 }
 
 final class RandomImagesViewController: UIViewController {
@@ -46,14 +46,14 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
         randomImagesView.stopLoading()
     }
     
-    func updateImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
+    func displayUpdatedImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel) {
         randomImagesView.toggleImageCardStatus(viewModel: viewModel)
     }
 }
 
 // MARK: - RandomImagesViewDelegate
 extension RandomImagesViewController: RandomImagesViewDelegate {
-    func updateImageStatus(cellID: Int, isFavorite: Bool) {
+    func updateImageStatus(cellID: Int) {
         interactor.toggleImageStatus(request: RandomImagesFileWorkingModels.Request(imageId: cellID))
     }
     

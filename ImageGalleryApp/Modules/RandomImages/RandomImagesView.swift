@@ -10,7 +10,7 @@ import SnapKit
 
 protocol RandomImagesViewDelegate: AnyObject {
     func getMoreImages()
-    func updateImageStatus(cellID: Int, isFavorite: Bool)
+    func updateImageStatus(cellID: Int)
 }
 
 final class RandomImagesView: UIView {
@@ -82,7 +82,7 @@ extension RandomImagesView {
 // MARK: - IEndOfTableHandler
 extension RandomImagesView: ImageTableViewDelegate {
     func changeImageStatus(cellID: Int, isFavorite: Bool) {
-        delegate?.updateImageStatus(cellID: cellID, isFavorite: isFavorite)
+        delegate?.updateImageStatus(cellID: cellID)
     }
     
     func endOfTableReached() {

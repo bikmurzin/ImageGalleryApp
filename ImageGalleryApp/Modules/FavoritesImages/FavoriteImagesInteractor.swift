@@ -15,12 +15,18 @@ protocol FavoriteImagesBusinessLogic: AnyObject {
 final class FavoriteImagesInteractor {
     
     private let presenter: FavoriteImagesPresentationLogic
-    private lazy var fileWorker = FileWorker()
-    private lazy var realmManager = RealmManager()
+    private var fileWorker: IFileWorker
+    private var realmManager: IRealmManager
     private var loadedImages = [FavoriteImagesModels.Response.DataModel]()
     
-    init(presenter: FavoriteImagesPresentationLogic) {
+    init(
+        presenter: FavoriteImagesPresentationLogic,
+        fileWorker: IFileWorker = FileWorker(),
+        realmManager: IRealmManager = RealmManager()
+    ) {
         self.presenter = presenter
+        self.fileWorker = fileWorker
+        self.realmManager = realmManager
     }
     
     private func loadSavedData() {
@@ -36,6 +42,9 @@ final class FavoriteImagesInteractor {
     }
     
     private func deleteImage(elementId: Int) {
+        guard loadedImages.count > elementId else {
+            return
+        }
         let loadedImage = loadedImages[elementId]
         if let intImageId = Int(loadedImage.imageId) {
             realmManager.deleteDataFromDB(imageId: intImageId)

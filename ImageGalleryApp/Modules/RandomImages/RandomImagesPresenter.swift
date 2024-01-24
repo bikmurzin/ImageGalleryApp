@@ -28,6 +28,6 @@ extension RandomImagesPresenter: RandomImagesPresentationLogic {
     }
     
     func presentToggledImageStatus(response: RandomImagesFileWorkingModels.Response) {
-        viewController?.updateImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel(imageId: response.imageId, isFavorite: response.isFavorite))
+        viewController?.displayUpdatedImageStatus(viewModel: RandomImagesFileWorkingModels.ViewModel(imageId: response.imageId, isFavorite: response.isFavorite))
     }
 }
