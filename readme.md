@@ -28,5 +28,5 @@ https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/1630d568-cb4d-40ba-
 https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/6c70a573-1248-41f5-b01e-d548931e9f39
 
 #### Работа без интернета
-![Без интернета](https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/47bdc0d9-e73a-4738-b45c-71f7ee2f3146){width=600}
+![Без интернета](https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/47bdc0d9-e73a-4738-b45c-71f7ee2f3146)
 
