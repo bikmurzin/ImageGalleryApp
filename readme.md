@@ -15,8 +15,17 @@
 ## Реализация работы без интернета
 Понравившиеся картинки сохраняются в директорию Documents, а путь к файлу - в БД Realm
 ## Демонстрация
-#### Основной функционал
-![Основной функционал (2)](https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/a5860cb2-454b-40af-b880-c6f5c7cb404b)
+#### Загрузка изображений с пагинацией
+https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/67a37a41-24e9-46a6-a313-4f0f077fca67
+
+#### Сохранение понравившихся изображений
+https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/f07026dd-7cc8-4b1a-b63f-57489f33e939
+
+#### Удаление изображений из избранного
+https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/1630d568-cb4d-40ba-864a-8267988554f7
+
+#### Синхронизация лайков между вкладками "Лента" и "Избранное"
+https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/6c70a573-1248-41f5-b01e-d548931e9f39
 
 #### Работа без интернета
 ![Без интернета](https://github.com/bikmurzin/ImageGalleryApp/assets/51128795/47bdc0d9-e73a-4738-b45c-71f7ee2f3146){width=600}
